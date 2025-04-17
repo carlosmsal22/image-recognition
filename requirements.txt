@@ -1,0 +1,21 @@
+streamlit 
+openai>=1.2.4 
+pandas 
+openpyxl 
+scipy 
+numpy 
+matplotlib 
+seaborn 
+scikit-learn 
+statsmodels 
+semopy 
+wordcloud 
+fpdf 
+python-pptx 
+tabulate 
+plotly 
+python-docx
+altair>=4.2.0  # For advanced visualizations
+keras 
+tensorflow  
+opencv-python
