@@ -1,28 +1,23 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import os
 import cv2
-from keras.applications.resnet50 import ResNet50
-from keras.preprocessing import image
-from keras.applications.resnet50 import preprocess_input, decode_predictions
+from keras.applications.resnet50 import ResNet50, preprocess_input, decode_predictions
+from keras.utils import img_to_array
 
-# Load the pre-trained ResNet50 model
-model = ResNet50(weights='imagenet')
+def classify_image(img_path):
+    # Load model
+    model = ResNet50(weights='imagenet')
+    
+    # Load and preprocess image
+    img = cv2.imread(img_path)
+    img = cv2.resize(img, (224, 224))
+    x = img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+    
+    # Predict and return results
+    preds = model.predict(x)
+    return decode_predictions(preds, top=3)[0]
 
-# Path to the input image
-img_path = 'football.jpg' # The image to classify
-
-# Load the image
-img = cv2.imread(img_path)
-
-# Preprocess the image
-img = cv2.resize(img, (224, 224))
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
-x = preprocess_input(x)
-
-# Make predictions
-preds = model.predict(x)
-
-# Decode and display predictions
-print('Predicted:', decode_predictions(preds, top=3)[0])
+if __name__ == '__main__':
+    result = classify_image('football.jpg')
+    print("Predicted:", result)
